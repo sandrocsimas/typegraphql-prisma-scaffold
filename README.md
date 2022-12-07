@@ -1,1 +1,1 @@
-Core
+Type Graphql + Prisma Scaffold
