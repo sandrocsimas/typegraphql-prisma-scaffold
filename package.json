@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "prisma-generate": "npx prisma generate",
     "prisma-format": "npx prisma format",
-    "prisma-migrate-dev": "npx prisma migrate dev --name",
+    "prisma-migrate": "npx prisma migrate dev --name",
     "start": "npm run prisma-generate && npm run build && node lib/server.js",
     "test": "mocha --recursive --require ts-node/register --extensions ts **/*.spec.ts"
   },
