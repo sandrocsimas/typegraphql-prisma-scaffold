@@ -1,7 +1,8 @@
 {
-  "name": "plotz-core",
+  "name": "typegraphql-prisma-scaffold",
   "version": "1.0.0",
-  "description": "Plotz Core",
+  "description": "Type Graphql + Prisma Scaffold",
+  "author": "Sandro Simas <sandro.csimas@gmail.com>",
   "license": "N/A",
   "main": "lib/index.js",
   "scripts": {
