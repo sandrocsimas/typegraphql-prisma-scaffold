@@ -7,8 +7,9 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "npx rimraf lib && tsc --build src && cp .env lib",
+    "generate-models": "npx prisma generate",
     "lint": "eslint .",
-    "start": "npm run build && node lib/server.js",
+    "start": "npm run generate-models && npm run build && node lib/server.js",
     "test": "mocha --recursive --require ts-node/register --extensions ts **/*.spec.ts"
   },
   "files": [
