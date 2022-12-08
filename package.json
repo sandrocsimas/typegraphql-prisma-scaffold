@@ -7,9 +7,13 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "npx rimraf lib && tsc --build src && cp .env lib",
-    "generate-models": "npx prisma generate",
+    "deps-start": "sh bin/deps-start.sh",
+    "deps-stop": "sh bin/deps-stop.sh",
     "lint": "eslint .",
-    "start": "npm run generate-models && npm run build && node lib/server.js",
+    "prisma-generate": "npx prisma generate",
+    "prisma-format": "npx prisma format",
+    "prisma-migrate-dev": "npx prisma migrate dev --name",
+    "start": "npm run prisma-generate && npm run build && node lib/server.js",
     "test": "mocha --recursive --require ts-node/register --extensions ts **/*.spec.ts"
   },
   "files": [
