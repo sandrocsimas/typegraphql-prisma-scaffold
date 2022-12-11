@@ -3,23 +3,19 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 class Config {
-  public env: string = Config.getProperty('APP_ENV', 'development');
+  public env: string = this.getProperty('APP_ENV', 'development');
 
-  public port: number = Config.getProperty('APP_PORT', 3000);
+  public port: number = this.getProperty('APP_PORT', 3000);
 
-  public debug: boolean = Config.getProperty('APP_DEBUG', false);
+  public debug: boolean = this.getProperty('APP_DEBUG', false);
 
-  public databaseUrl: string = Config.getRequiredProperty('DATABASE_URL');
+  public jwtSecret: string = this.getRequiredProperty('JWT_SECRET');
 
-  public isDevelopment(): boolean {
-    return this.env === 'development';
-  }
-
-  private static getProperty(name: string, defaultValue: any): any {
+  private getProperty(name: string, defaultValue: any): any {
     return process.env[name] ?? defaultValue;
   }
 
-  private static getRequiredProperty(name: string): any {
+  private getRequiredProperty(name: string): any {
     const value = process.env[name];
     if (!value) {
       throw new Error(`Property "${name}" is required`);

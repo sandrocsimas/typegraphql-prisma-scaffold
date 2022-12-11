@@ -1,21 +1,33 @@
-import { User } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
+import { Service } from 'typedi';
 
-import prisma from '../database';
-
+@Service()
 class UserService {
-  public createUser(email: string, firstName: string, lastName: string): Promise<User> {
-    return prisma.user.create({
+  public constructor(private prisma: PrismaClient) {}
+
+  public create(firstName: string, lastName: string, username: string, email: string, password: string): Promise<User> {
+    return this.prisma.user.create({
       data: {
-        email,
         firstName,
         lastName,
+        username,
+        email,
+        password,
       },
     });
   }
 
-  public getUserById(id: string): Promise<User | null> {
-    return prisma.user.findFirst({ where: { id } });
+  public async authenticate(email: string, password: string): Promise<User> {
+    const user = await this.prisma.user.findUniqueOrThrow({ where: { email } });
+    if (user.password !== password) {
+      throw new Error('Invalid password');
+    }
+    return user;
+  }
+
+  public getById(id: string): Promise<User> {
+    return this.prisma.user.findUniqueOrThrow({ where: { id } });
   }
 }
 
-export default new UserService();
+export default UserService;

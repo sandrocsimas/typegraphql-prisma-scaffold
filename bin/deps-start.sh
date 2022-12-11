@@ -11,7 +11,10 @@ while ! docker exec mysql mysql --user=$DB_USER --password=$DB_PASSWORD --execut
     sleep 2
 done
 
-echo "Creating schema $DB_SCHEMA..."
+echo "Creating database schema $DB_SCHEMA..."
 docker exec -i mysql mysql --user=$DB_USER --password=$DB_PASSWORD --execute "create schema $DB_SCHEMA;" > /dev/null 2>&1
+
+echo "Creating database structure..."
+npm run prisma-push
 
 echo "Done!"

@@ -5,20 +5,31 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator typegraphql {
-  provider = "typegraphql-prisma"
-}
-
 datasource db {
   provider = "mysql"
   url      = env("DB_URL")
 }
 
 model User {
-  id        String @id @default(uuid()) @db.VarChar(255)
-  email     String @unique @db.VarChar(255)
-  firstName String @map("first_name") @db.VarChar(255)
-  lastName  String @map("last_name") @db.VarChar(255)
+  id        String   @id @default(uuid()) @db.VarChar(255)
+  firstName String   @map("first_name") @db.VarChar(255)
+  lastName  String   @map("last_name") @db.VarChar(255)
+  username  String   @unique @map("username") @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  Post Post[]
 
   @@map("users")
+}
+
+model Post {
+  id        String   @id @default(uuid()) @db.VarChar(255)
+  text      String   @db.VarChar(500)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String   @map("author_id") @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("posts")
 }
