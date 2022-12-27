@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import {
   Arg,
   Authorized,
+  Ctx,
   Mutation,
   Query,
   Resolver,
@@ -10,12 +11,15 @@ import { Service } from 'typedi';
 
 import config from '../../config';
 import { UserService } from '../../services';
+import { Context } from '../context';
 import {
   SignInInput,
   SignUpInput,
   User,
   UserAndTokenOutput,
 } from '../typeDefs';
+
+import getAuthInfo from './helpers';
 
 @Service()
 @Resolver(User)
@@ -26,6 +30,13 @@ class UserResolver {
   @Query(() => User)
   public async user(@Arg('id') id: string): Promise<User> {
     return this.userService.getById(id);
+  }
+
+  @Authorized()
+  @Query(() => User)
+  public async me(@Ctx() ctx: Context): Promise<User> {
+    const authInfo = getAuthInfo(ctx);
+    return this.userService.getById(authInfo.id);
   }
 
   @Mutation(() => UserAndTokenOutput)

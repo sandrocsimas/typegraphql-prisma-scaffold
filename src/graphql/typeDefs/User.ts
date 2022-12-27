@@ -15,5 +15,5 @@ export default class User {
   public username!: string;
 
   @Field()
-  public email!: string;
+  public createdAt!: Date;
 }
