@@ -9,9 +9,6 @@ export default class SignUpInput {
   public lastName!: string;
 
   @Field()
-  public username!: string;
-
-  @Field()
   public email!: string;
 
   @Field()
