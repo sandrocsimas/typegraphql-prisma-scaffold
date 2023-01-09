@@ -9,12 +9,15 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import { expressjwt } from 'express-jwt';
+import Container from 'typedi';
 
-import config from './config';
-import { buildContext, Context } from './graphql/context';
+import Config from './Config';
+import { Context, ContextProvider } from './ContextProvider';
 import buildSchema from './graphql/schema';
 
 const startApp = async (): Promise<void> => {
+  const config = Container.get(Config);
+  const contextProvider = Container.get(ContextProvider);
   const app = express();
   const httpServer = http.createServer(app);
 
@@ -34,7 +37,7 @@ const startApp = async (): Promise<void> => {
       secret: config.jwtSecret,
     }),
     expressMiddleware(apolloServer, {
-      context: buildContext,
+      context: contextProvider.buildContext,
     }),
   );
 

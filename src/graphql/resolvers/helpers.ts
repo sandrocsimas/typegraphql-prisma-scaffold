@@ -1,10 +1,12 @@
-import { AuthInfo, Context } from '../context';
+import { User } from '@prisma/client';
 
-const getAuthInfo = (ctx: Context): AuthInfo => {
-  if (!ctx.auth) {
+import { Context } from '../../ContextProvider';
+
+const getAuthenticatedUser = (ctx: Context): User => {
+  if (!ctx.user) {
     throw new Error('Not authrorized');
   }
-  return ctx.auth;
+  return ctx.user;
 };
 
-export default getAuthInfo;
+export default getAuthenticatedUser;

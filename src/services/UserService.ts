@@ -3,14 +3,19 @@ import { Service } from 'typedi';
 
 @Service()
 class UserService {
-  public constructor(private prisma: PrismaClient) {}
+  public constructor(
+    private prisma: PrismaClient,
+  ) {}
 
-  public create(firstName: string, lastName: string, username: string, email: string, password: string): Promise<User> {
+  public get(id: string): Promise<User> {
+    return this.prisma.user.findUniqueOrThrow({ where: { id } });
+  }
+
+  public create(firstName: string, lastName: string, email: string, password: string): Promise<User> {
     return this.prisma.user.create({
       data: {
         firstName,
         lastName,
-        username,
         email,
         password,
       },
@@ -23,10 +28,6 @@ class UserService {
       throw new Error('Invalid password');
     }
     return user;
-  }
-
-  public getById(id: string): Promise<User> {
-    return this.prisma.user.findUniqueOrThrow({ where: { id } });
   }
 }
 

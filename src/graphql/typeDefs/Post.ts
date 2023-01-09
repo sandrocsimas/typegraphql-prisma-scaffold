@@ -8,13 +8,13 @@ export default class Post {
   public id!: string;
 
   @Field()
-  public text!: string;
-
-  @Field()
   public author!: User;
 
   @Field()
   public authorId!: string;
+
+  @Field()
+  public text!: string;
 
   @Field()
   public createdAt!: Date;

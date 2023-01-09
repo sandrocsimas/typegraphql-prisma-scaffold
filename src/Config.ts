@@ -1,7 +1,9 @@
 import * as dotenv from 'dotenv';
+import { Service } from 'typedi';
 
 dotenv.config();
 
+@Service()
 class Config {
   public env: string = this.getProperty('APP_ENV', 'development');
 
@@ -24,4 +26,4 @@ class Config {
   }
 }
 
-export default new Config();
+export default Config;

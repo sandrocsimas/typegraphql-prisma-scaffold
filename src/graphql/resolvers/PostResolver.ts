@@ -8,24 +8,24 @@ import {
 } from 'type-graphql';
 import { Service } from 'typedi';
 
-import { PostService, UserService } from '../../services';
-import { Context } from '../context';
-import { CreatePostInput, Post } from '../typeDefs';
+import { Context } from '../../ContextProvider';
+import { PostService } from '../../services';
+import Post from '../typeDefs/Post';
+import CreatePostInput from '../typeDefs/inputs/CreatePostInput';
 
-import getAuthInfo from './helpers';
+import getAuthenticatedUser from './helpers';
 
 @Service()
 @Resolver(Post)
 class PostResolver {
   public constructor(
     private postService: PostService,
-    private userService: UserService,
   ) {}
 
   @Authorized()
   @Query(() => Post)
   public async post(@Arg('id') id: string): Promise<Post> {
-    return this.postService.getById(id);
+    return this.postService.get(id);
   }
 
   @Authorized()
@@ -37,9 +37,15 @@ class PostResolver {
   @Authorized()
   @Mutation(() => Post)
   public async createPost(@Arg('input') input: CreatePostInput, @Ctx() ctx: Context): Promise<Post> {
-    const authInfo = getAuthInfo(ctx);
-    const user = await this.userService.getById(authInfo.id);
+    const user = getAuthenticatedUser(ctx);
     return this.postService.create(user, input.text);
+  }
+
+  @Authorized()
+  @Mutation(() => Boolean)
+  public async removePost(@Arg('postId') postId: string, @Ctx() ctx: Context): Promise<boolean> {
+    const user = getAuthenticatedUser(ctx);
+    return this.postService.remove(user, postId);
   }
 }
 

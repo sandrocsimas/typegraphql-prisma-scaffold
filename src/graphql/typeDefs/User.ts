@@ -11,8 +11,8 @@ export default class User {
   @Field()
   public lastName!: string;
 
-  @Field()
-  public username!: string;
+  @Field(() => String, { nullable: true })
+  public username?: string | null;
 
   @Field()
   public createdAt!: Date;
