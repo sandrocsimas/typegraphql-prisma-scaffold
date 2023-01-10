@@ -9,7 +9,7 @@ import {
 import { Service } from 'typedi';
 
 import { Context } from '../../ContextProvider';
-import { PostService } from '../../services';
+import PostService from '../../services/PostService';
 import Post from '../typeDefs/Post';
 import CreatePostInput from '../typeDefs/inputs/CreatePostInput';
 
@@ -18,9 +18,7 @@ import getAuthenticatedUser from './helpers';
 @Service()
 @Resolver(Post)
 class PostResolver {
-  public constructor(
-    private postService: PostService,
-  ) {}
+  public constructor(private postService: PostService) {}
 
   @Authorized()
   @Query(() => Post)

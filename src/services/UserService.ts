@@ -3,9 +3,7 @@ import { Service } from 'typedi';
 
 @Service()
 class UserService {
-  public constructor(
-    private prisma: PrismaClient,
-  ) {}
+  public constructor(private prisma: PrismaClient) {}
 
   public get(id: string): Promise<User> {
     return this.prisma.user.findUniqueOrThrow({ where: { id } });

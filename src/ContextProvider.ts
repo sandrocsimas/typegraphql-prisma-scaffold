@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import { Request } from 'express-jwt';
 import { Service } from 'typedi';
 
-import { UserService } from './services';
+import { UserService } from './services/init';
 
 export interface AuthInfo {
   id: string;

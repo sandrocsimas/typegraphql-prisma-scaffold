@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import './services/init';
 
 import http from 'http';
 
@@ -37,7 +38,7 @@ const startApp = async (): Promise<void> => {
       secret: config.jwtSecret,
     }),
     expressMiddleware(apolloServer, {
-      context: contextProvider.buildContext,
+      context: contextProvider.buildContext.bind(contextProvider),
     }),
   );
 

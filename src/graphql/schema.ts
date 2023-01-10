@@ -13,6 +13,7 @@ const buildSchema = async (): Promise<GraphQLSchema> => typeGraphql.buildSchema(
     PostResolver,
     UserResolver,
   ],
+  validate: { forbidUnknownValues: false },
 });
 
 export default buildSchema;

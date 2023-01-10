@@ -11,7 +11,7 @@ import { Service } from 'typedi';
 
 import Config from '../../Config';
 import { Context } from '../../ContextProvider';
-import { UserService } from '../../services';
+import UserService from '../../services/UserService';
 import User from '../typeDefs/User';
 import SignInInput from '../typeDefs/inputs/SignInInput';
 import SignUpInput from '../typeDefs/inputs/SignUpInput';
