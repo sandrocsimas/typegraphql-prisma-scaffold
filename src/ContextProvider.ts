@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import { Request } from 'express-jwt';
 import { Service } from 'typedi';
 
-import { UserService } from './services/init';
+import UserService from './services/UserService';
 
 export interface AuthInfo {
   id: string;
@@ -16,9 +16,7 @@ export interface Context {
 
 @Service()
 export class ContextProvider {
-  public constructor(
-    private userService: UserService,
-  ) {}
+  public constructor(private userService: UserService) {}
 
   public async buildContext(expressContext: ExpressContextFunctionArgument): Promise<Context> {
     const { auth } = expressContext.req as Request;
