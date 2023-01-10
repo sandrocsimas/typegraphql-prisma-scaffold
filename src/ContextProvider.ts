@@ -20,8 +20,13 @@ export class ContextProvider {
 
   public async buildContext(expressContext: ExpressContextFunctionArgument): Promise<Context> {
     const { auth } = expressContext.req as Request;
-    return {
-      user: auth ? await this.userService.get(auth.id) : null,
-    };
+    try {
+      const user = auth ? await this.userService.get(auth.id) : null;
+      return { user };
+    } catch (err) {
+      console.log('Failed to create context:');
+      console.log(err);
+      return { user: null };
+    }
   }
 }
